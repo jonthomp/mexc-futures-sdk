@@ -47,7 +47,7 @@ export interface OrderDeal {
   profit: string; // profit
   isTaker: boolean; // is taker order
   category: number; // 1 limit order, 2 system take-over delegate, 3 close delegate, 4 ADL reduction
-  orderId: number; // order id
+  orderId: number | bigint; // order id — large ids exceed 2^53 and are parsed as BigInt; use String(orderId)
   timestamp: number; // transaction timestamp
 }
 
@@ -59,7 +59,7 @@ export interface OrderDealsResponse {
 
 // Cancel orders types
 export interface CancelOrderResult {
-  orderId: number;
+  orderId: number | bigint; // large ids exceed 2^53 and are parsed as BigInt; use String(orderId)
   errorCode: number; // 0 means success, non-zero means failure
   errorMsg: string;
 }
@@ -115,7 +115,7 @@ export interface SubmitOrderResponse {
   success: boolean;
   code: number;
   message?: string;
-  data?: number; // Order ID is returned directly as a number
+  data?: number | bigint; // Order ID — large ids exceed 2^53 and are parsed as BigInt; use String(data)
 }
 
 // Get order by ID types

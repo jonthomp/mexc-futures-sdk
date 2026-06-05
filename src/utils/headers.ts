@@ -60,11 +60,9 @@ export function generateHeaders(
 
       headers["x-mxc-nonce"] = signature.time;
       headers["x-mxc-sign"] = signature.sign;
-
-      console.log("🔐 MEXC signature debug:");
-      console.log(`  Timestamp: ${signature.time}`);
-      console.log(`  Signature: ${signature.sign}`);
-      console.log(`  Request body: ${JSON.stringify(requestBody)}`);
+      // NOTE: the signature/nonce are request secrets and must never be logged.
+      // The request method/URL/body are already logged at debug level by the client's
+      // request interceptor (gated by logLevel), so nothing useful is lost here.
     }
   }
 

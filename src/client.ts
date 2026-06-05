@@ -36,6 +36,7 @@ import {
   ContractDetailResponse,
   ContractDepthResponse,
 } from "./types/market";
+import JSONBigInt from "json-bigint";
 
 export interface MexcFuturesSDKConfig {
   authToken: string; // WEB authentication key (starts with "WEB...")
@@ -59,6 +60,19 @@ export class MexcFuturesSDK {
       baseURL: config.baseURL || "https://futures.mexc.com/api/v1",
       timeout: config.timeout || 30000,
       headers: generateHeaders(config),
+      // Parse responses with a big-int-safe JSON parser. MEXC order ids exceed
+      // Number.MAX_SAFE_INTEGER (e.g. 817027833053397504), and the default JSON.parse
+      // silently corrupts them (…397504 -> …397500). JSONBigInt preserves them as BigInt
+      // so String(orderId) is exact; falls back to the raw string on non-JSON payloads.
+      transformResponse: [
+        (data) => {
+          try {
+            return JSONBigInt.parse(data);
+          } catch {
+            return data;
+          }
+        },
+      ],
     });
 
     // Request interceptor for debugging
