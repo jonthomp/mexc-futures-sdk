@@ -4,6 +4,16 @@ A TypeScript SDK for MEXC Futures trading with REST API and WebSocket support.
 
 ⚠️ **DISCLAIMER**: This SDK uses browser session tokens and reverse-engineered endpoints. MEXC does not officially support futures trading through API. Use at your own risk.
 
+<p align="center">
+  <a href="https://discord.gg/bZeQd4rMW9"><img src="https://img.shields.io/badge/Discord-MEXC%20Traders-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Join MEXC Traders on Discord"></a>
+  <a href="https://t.me/yobebka"><img src="https://img.shields.io/badge/Telegram-Contact-26A5E4?style=for-the-badge&logo=telegram&logoColor=white" alt="Contact on Telegram"></a>
+  <a href="https://www.npmjs.com/package/mexc-futures-sdk"><img src="https://img.shields.io/npm/v/mexc-futures-sdk?style=for-the-badge&logo=npm&color=CB3837" alt="npm version"></a>
+</p>
+
+## 💬 Community
+
+Join the **[MEXC Traders Discord](https://discord.gg/bZeQd4rMW9)** — discuss MEXC trading, this SDK, strategies, and get help. For direct contact: **[Telegram @yobebka](https://t.me/yobebka)**.
+
 ## Features
 
 - ✅ **REST API** - Complete trading functionality
