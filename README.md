@@ -1,5 +1,7 @@
 # MEXC Futures SDK
 
+**Unofficial TypeScript SDK for MEXC Futures automated trading — including zero-fee (0% commission) futures pairs.**
+
 A TypeScript SDK for MEXC Futures trading with REST API and WebSocket support.
 
 ⚠️ **DISCLAIMER**: This SDK uses browser session tokens and reverse-engineered endpoints. MEXC does not officially support futures trading through API. Use at your own risk.
@@ -21,6 +23,39 @@ Join the **[MEXC Traders Discord](https://discord.gg/bZeQd4rMW9)** — discuss M
 - ✅ **TypeScript** - Full type definitions
 - ✅ **Auto-reconnect** - Reliable WebSocket connections
 - ✅ **Error handling** - Comprehensive error management
+
+## Zero-fee futures
+
+MEXC periodically runs zero-fee (0% trading fee) futures markets for eligible accounts and pairs. The
+set of 0-fee pairs is curated per account and changes over time, so a pair that trades without fees on
+one account may be charged on another — worth verifying against `getOrderHistory`, which returns the
+`takerFeeRate` / `makerFeeRate` actually applied to each filled order:
+
+```typescript
+const history = await client.getOrderHistory({ page_num: 1, page_size: 100 });
+for (const order of history.data.filter((o) => Number(o.dealVol) > 0)) {
+  console.log(order.symbol, "taker:", Number(order.takerFeeRate) * 1e4, "bps");
+}
+```
+
+This SDK was originally written for automated MEXC futures trading on those zero-fee pairs, where
+round-trip costs are small enough for short-horizon strategies to be viable.
+
+---
+
+### 🤝 MEXC zero-fee futures automation
+
+Looking for automated trading on MEXC zero-fee (0% commission) futures?
+
+I run a private automated trading setup for selected MEXC accounts.
+
+- No upfront software fee — performance-based only
+- Runs on your own account; you keep custody
+- Limited to accounts eligible for zero-fee pairs
+
+👉 Contact me on Telegram: **[@yobebka](https://t.me/yobebka)**
+
+---
 
 ## Installation
 
@@ -368,6 +403,23 @@ ts-node examples/websocket.ts
 - `subscribeToMultiple(filters)` - Subscribe with filters
 - `subscribeToTicker(symbol)` - Market data subscriptions
 - `disconnect()` - Close connection
+
+## MEXC zero-fee futures automation
+
+If you got this far, you are probably building it yourself — which is the point of this SDK. But if
+you would rather not:
+
+I operate a private automated trading setup on MEXC futures, focused on zero-fee / 0% commission pairs.
+
+- **Automated futures trading** on eligible MEXC accounts
+- **Zero-fee pairs only** — the strategy does not survive standard taker fees
+- **No software purchase** — nothing to buy, nothing to install
+- **Performance-based fee** — I earn only when the account does
+
+Not every account qualifies: it has to be eligible for MEXC's zero-fee pairs, and the pairs themselves
+have to be liquid enough to be worth trading.
+
+Interested? Telegram → **[@yobebka](https://t.me/yobebka)**
 
 ## Support
 
